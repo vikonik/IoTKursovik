@@ -6,19 +6,19 @@ ID объектов:
  - mqtt-vikonik-Truck
 
 Модели:
-  Грузовик
-  Склад
+ - Грузовик
+ - Склад
 
 Логика:
-  Контроль качества вождения
-  Контроль шлакбаума
-  Контролькондиционера
+ - Контроль качества вождения
+ - Контроль шлакбаума
+ - Контролькондиционера
 
 Обработчики:
-  TruckStatus
+ - TruckStatus
   
 Grafana:
-  Gtafana.json
+ - Gtafana.json
   
 Результат работы Telegramm бота:
-  TelegrammBot.jpg
+ - TelegrammBot.jpg
