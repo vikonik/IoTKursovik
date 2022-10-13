@@ -2,8 +2,8 @@
 Запуск эмуляторов выполняется через bat-файл
 
 ID объектов:
-  mqtt-vikonik-sklad
-  mqtt-vikonik-Truck
+ - mqtt-vikonik-sklad
+ - mqtt-vikonik-Truck
 
 Модели:
   Грузовик
