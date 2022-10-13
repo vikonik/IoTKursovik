@@ -1,0 +1,861 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "WZZxfOV4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "fillOpacity": 70,
+            "lineWidth": 1,
+            "spanNulls": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "На склад": {
+                  "color": "orange",
+                  "index": 0,
+                  "text": "На склад"
+                },
+                "На ферму": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "На ферму"
+                },
+                "Стоянка-полный": {
+                  "color": "blue",
+                  "index": 2,
+                  "text": "Стоянка-полный"
+                },
+                "Стоянка-пустой": {
+                  "color": "purple",
+                  "index": 3,
+                  "text": "Стоянка-пустой"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": ""
+              },
+              {
+                "color": "#6ED0E0",
+                "value": 15
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 18,
+        "x": 0,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.5",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "time",
+              "text": "",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "truckStatus",
+              "text": "Ссостояния грузовика",
+              "type": "string"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "WZZxfOV4z"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://dev.rightech.io/api/v1/objects/632db96c0023900010ff2e91/packets?withChildGroups=true&ofType=processed&nolimit=true&streamed=true&from=$__from&to=$__to&db=pgts",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Дискретное изменение состояния грузовика",
+      "type": "state-timeline"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "WZZxfOV4z"
+      },
+      "description": "Температура внутри грузовика и склада\n",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 0,
+        "y": 6
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.5",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "time",
+              "text": "",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "temperatureIn",
+              "text": "В кузове",
+              "type": "number"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "WZZxfOV4z"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "key": "Q-283d5aec-5e01-4034-85bb-a73da2ce94ca-0",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://dev.rightech.io/api/v1/objects/632db96c0023900010ff2e91/packets?withChildGroups=true&ofType=processed&nolimit=true&streamed=true&from=$__from&to=$__to&db=pgts",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "time",
+              "text": "",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "temperatureIn",
+              "text": "На складе",
+              "type": "number"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "WZZxfOV4z"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "hide": false,
+          "key": "Q-283d5aec-5e01-4034-85bb-a73da2ce94ca-0",
+          "refId": "B",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://dev.rightech.io/api/v1/objects/632f80558483dd0010b0a4a3/packets?withChildGroups=true&ofType=telemetry&nolimit=true&streamed=true&from=$__from&to=$__to&db=pgts",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Температура внутри",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "WZZxfOV4z"
+      },
+      "description": "Влажность внутри грузовика и склада",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 9,
+        "y": 6
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.5",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "time",
+              "text": "",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "humidityIn",
+              "text": "В кузове",
+              "type": "number"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "WZZxfOV4z"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://dev.rightech.io/api/v1/objects/632db96c0023900010ff2e91/packets?withChildGroups=true&ofType=processed&nolimit=true&streamed=true&from=$__from&to=$__to&db=pgts",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "time",
+              "text": "",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "humidityIn",
+              "text": "На складе",
+              "type": "number"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "WZZxfOV4z"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "hide": false,
+          "refId": "B",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://dev.rightech.io/api/v1/objects/632f80558483dd0010b0a4a3/packets?withChildGroups=true&ofType=telemetry&nolimit=true&streamed=true&from=$__from&to=$__to&db=pgts",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Влажность внутри",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "WZZxfOV4z"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 9,
+        "x": 0,
+        "y": 13
+      },
+      "id": 7,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.1.5",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "time",
+              "text": "",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "gassArgon",
+              "text": "Аргон",
+              "type": "number"
+            },
+            {
+              "selector": "gassAzot",
+              "text": "Азот",
+              "type": "number"
+            },
+            {
+              "selector": "gassGeli",
+              "text": "Гелий",
+              "type": "number"
+            },
+            {
+              "selector": "gassVodorod",
+              "text": "Водород",
+              "type": "number"
+            },
+            {
+              "selector": "gassCO2",
+              "text": "Углекислый",
+              "type": "number"
+            },
+            {
+              "selector": "gassCO",
+              "text": "Угарный",
+              "type": "number"
+            },
+            {
+              "selector": "gassO2",
+              "text": "Кислород",
+              "type": "number"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "WZZxfOV4z"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://dev.rightech.io/api/v1/objects/632db96c0023900010ff2e91/packets?withChildGroups=true&ofType=processed&nolimit=true&streamed=true&from=$__from&to=$__to&db=pgts",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Выделение газов в кузове автомобиля",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "WZZxfOV4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 9,
+        "x": 9,
+        "y": 13
+      },
+      "id": 8,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.1.5",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "time",
+              "text": "",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "gassArgon",
+              "text": "Аргон",
+              "type": "number"
+            },
+            {
+              "selector": "gassAzot",
+              "text": "Азот",
+              "type": "number"
+            },
+            {
+              "selector": "gassGeli",
+              "text": "Гелий",
+              "type": "number"
+            },
+            {
+              "selector": "gassVodorod",
+              "text": "Водород",
+              "type": "number"
+            },
+            {
+              "selector": "gassCO2",
+              "text": "Углекислый",
+              "type": "number"
+            },
+            {
+              "selector": "gassCO",
+              "text": "Угарный",
+              "type": "number"
+            },
+            {
+              "selector": "gassO2",
+              "text": "Кислород",
+              "type": "number"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "WZZxfOV4z"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://dev.rightech.io/api/v1/objects/632f80558483dd0010b0a4a3/packets?withChildGroups=true&ofType=telemetry&nolimit=true&streamed=true&from=$__from&to=$__to&db=pgts",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Выделение газов на складе",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "WZZxfOV4z"
+      },
+      "description": "1) Если скорость грузовика больше 0 и масса продуктов больше 0,\nотображать статус “На склад”,\n2) Если скорость грузовика больше 0 и масса продуктов равна 0,\nотображать статус “На ферму”,\n3) Если скорость грузовика равна 0 и масса продуктов больше 0,\nотображать статус “Стоянка-полный”,\n4) Если скорость грузовика равна 0 и масса продуктов равна 0,\nотображать статус “Стоянка-пустой”",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 70,
+            "lineWidth": 0,
+            "spanNulls": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 0,
+        "y": 21
+      },
+      "id": 10,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.5",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "time",
+              "text": "",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "truckStatus",
+              "text": "Состояние автомобиля",
+              "type": "string"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "WZZxfOV4z"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://dev.rightech.io/api/v1/objects/632db96c0023900010ff2e91/packets?withChildGroups=true&ofType=processed&nolimit=true&streamed=true&from=$__from&to=$__to&db=pgts",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Состояние грузовика",
+      "type": "state-timeline"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "WZZxfOV4z"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "max": 120,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "dark-green",
+                "value": 40
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "velocitykmh"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 9,
+        "y": 21
+      },
+      "id": 5,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.1.5",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "time",
+              "text": "",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "speed",
+              "text": "",
+              "type": "number"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "WZZxfOV4z"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "https://dev.rightech.io/api/v1/objects/632db96c0023900010ff2e91/packets?withChildGroups=true&ofType=processed&nolimit=true&streamed=true&from=$__from&to=$__to&db=pgts",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Скорость грузовика",
+      "type": "gauge"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-5s",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Test dashboard",
+  "uid": "g2Y4udVVz",
+  "version": 18,
+  "weekStart": ""
+}
