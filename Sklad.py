@@ -2,11 +2,16 @@
 Отправку данных делаем в отдельном потоке
 '''
 import sys  # sys нужен для передачи argv в QApplication
+from time import sleep  # sys нужен для передачи argv в QApplication
 from PyQt5 import QtWidgets, QtCore
 import ui_GUISklad  # Это наш конвертированный файл дизайна
 
 import paho.mqtt.client as mqtt  # mqtt paho
 import json  # json converter
+import threading
+
+sendWenChange = False #Отправка пакета при изменении состояния ползунка
+
 
 class ExampleApp(QtWidgets.QMainWindow, ui_GUISklad.Ui_MainWindow):
     def __init__(self):
@@ -24,6 +29,9 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUISklad.Ui_MainWindow):
         self.verticalSlider_barrierSwitsh.valueChanged.connect(self.sliderCangeBarrier)
         self.verticalSlider_barrierSwitsh.sliderReleased.connect(self.sendSliderCahngeBarrier)      
 
+        self.slider_air.valueChanged.connect(self.sliderCangeAir)
+        self.slider_air.sliderReleased.connect(self.sendSliderCahngeAir)   
+
         #Выделение газов
         self.spinBox_argon.valueChanged.connect(self.spinboxChangeArgon)        #Аргон
         self.spinBox_azot.valueChanged.connect(self.spinboxChangeAzot)          #Азот
@@ -34,17 +42,16 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUISklad.Ui_MainWindow):
         self.spinBox_O2.valueChanged.connect(self.spinboxChangeO2)              #Кислород
 
         self.spinBox_weight.valueChanged.connect(self.spinboxChangeWeight)      #Масса 
+
+        self.threadTest_instace = dataSender()
+
+
     #Объявляем переменные для класса
         self.temperatureIn = 0
         self.temperatureOut = 0
         self.humidityIn = 0
         self.humidityOut = 0
         self.conditionerState = False
-        self.speed = 0
-        self.lat = 57.343773782603854  # Текущая координата устройства
-        self.lon = 28.34066446324784  # Текущая координата устройства
-        self.choke = 0
-        self.suddenBraking = 0  #аварийное торможеие
         self.gassArgon = 0
         self.gassAzot = 0
         self.gassGeli = 0
@@ -55,6 +62,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUISklad.Ui_MainWindow):
         self.weight = 0
         self.barrier = False
         self.tt = 0
+        self.air = 0
     #Пороги включения и выключения кондиционера
         self.conditionerPorogOn = 0
         self.conditionerPorogOff = 0
@@ -81,13 +89,18 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUISklad.Ui_MainWindow):
 
         self.label_barrierState.setStyleSheet("background-color: red")
 
+#Запуск потока
+    def lunch_thread(self):
+        self.threadTest_instace.start()
+
 
 #Температура внутри
 # Отправляем новые данные после отпускаиня слайдера
     def sendSliderCangeTemperatureIn(self):
         self.temperatureIn = self.slider_temperatureIn.value()
         self.label_temperatureIn.setText(str(self.temperatureIn))
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
         #self.checkConditioner()
 
 # Отображаем новые данные без отправки
@@ -101,7 +114,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUISklad.Ui_MainWindow):
     def sendSliderCangeHumidityIn(self):
         self.humidityIn = self.slider_humidityIn.value()
         self.label_humidityIn.setText(str(self.humidityIn))
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
 
 # Отображаем новые данные без отправки
     def sliderCangeHumidityeIn(self, value):
@@ -116,7 +130,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUISklad.Ui_MainWindow):
         else:
             self.barrier = False 
         #self.label_barrierState.setText(str(self.barrier))
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
 
 # Отображаем новые данные без отправки
     def sliderCangeBarrier(self, value):
@@ -131,57 +146,78 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUISklad.Ui_MainWindow):
         else:
             self.label_barrierState.setText("Закр.") 
             self.label_barrierState.setStyleSheet("background-color: red")
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
+
+
+# Воздухообмен
+# Отправляем новые данные после отпускаиня слайдера
+    def sendSliderCahngeAir(self):
+        self.air = self.slider_air.value()
+        self.label_air.setText(str(self.air))
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
+
+
+# Отображаем новые данные без отправки
+    def sliderCangeAir(self, value):
+        self.air = value
+        self.label_air.setText(str(value))  
 
 
 #Выделение газов
 #Аргон
     def spinboxChangeArgon(self):
         self.gassArgon = self.spinBox_argon.value()
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
 
 #Азот
     def spinboxChangeAzot(self):
         self.gassAzot = self.spinBox_azot.value()
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
 
 #Гелий
     def spinboxChangeHeli(self):
         self.gassGeli = self.spinBox_heli.value()
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
 
 #Водород
     def spinboxChangeVodorod(self):
         self.gassVodorod= self.spinBox_vodorod.value()
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
 
 #Углекислый газ
     def spinboxChangeCO2(self):
         self.gassCO2= self.spinBox_CO2.value()
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
 
 #Угарный газ
     def spinboxChangeCO(self):
         self.gassCO= self.spinBox_CO.value()
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
+
 #Кислород
     def spinboxChangeO2(self):
         self.gassO2= self.spinBox_O2.value()
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
 
 #Масса
     def spinboxChangeWeight(self):
         self.weight= self.spinBox_weight.value()
-        publish_data(self.mqtt_client,self.topic_data,self.get_data())
+        if sendWenChange == True:
+            publish_data(self.mqtt_client,self.topic_data,self.get_data())
 
 
     # Формируем данные для отправки
     def get_data(self):
         data = json.dumps({
-            "pos":{
-                "lat": self.lat,
-                "lon": self.lon
-            },
             "humidity":{
                 "humidityIn":  self.humidityIn, 
                 "humidityOut": self.humidityOut
@@ -190,11 +226,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUISklad.Ui_MainWindow):
                 "temperatureIn":  self.temperatureIn, 
                 "temperatureOut": self.temperatureOut
             },
-            "speed": self.speed,  # скорость
             "conditionerState": self.conditionerState,
             "weight": self.weight,
-            "choke": self.choke,
-            "suddenBraking":self.suddenBraking,
             "gass":{
                 "gassArgon":self.gassArgon,
                 "gassAzot":self.gassAzot,
@@ -205,7 +238,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUISklad.Ui_MainWindow):
                 "gassO2":self.gassO2,
                 "weight":self.weight          
             },
-            "barrier": self.barrier
+            "barrier": self.barrier,
+            "air": self.air
         })
         return data
 
@@ -278,9 +312,29 @@ def run(client, host="dev.rightech.io", port=1883):
     client.loop_start()
 
 
+
+'''
+В этом классе реализуем отдельный поток для отправки данных от батчиков склада
+'''
+class dataSender(QtCore.QThread):
+    def __init__(self, parent = None):
+        super().__init__()
+     
+        
+    def run(self):
+        while(1):
+            sleep(10)            
+            print("Поток ")
+            publish_data(window.mqtt_client,window.topic_data,window.get_data())
+
+
+
+
+#***********************************Основная программа****************************************************
 print("Start GIU")
 app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
 window = ExampleApp()  # Создаём объект класса ExampleApp
 window.show()  # Показываем окно
 print("OK")
+window.lunch_thread()
 app.exec_()  # и запускаем приложение        

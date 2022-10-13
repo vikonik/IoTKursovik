@@ -11,8 +11,6 @@ import ui_GUITruck  # Это наш конвертированный файл д
 
 import paho.mqtt.client as mqtt  # mqtt paho
 import json  # json converter
-#from Emulator_1 import Truck
-#import Truck
 import threading
 
 localCounter = 0
@@ -362,18 +360,6 @@ def run(client, host="dev.rightech.io", port=1883):
 '''
 В этом классе реализуем отдельный поток для отправки координат автомобиля.
 Ечли скоость не равна 0 то эмулятор начнет отправку коордеинат
-'''
-class coordinateSender(QtCore.QThread):
-    def __init__(self, parent = None):
-        super().__init__()
-        self.topic_data = "data/state"  # текущее состояние
-        self.mqtt_client = init("mqtt-vikonik-Truck")#mqtt-vikonik-Truck
-        self.lat = 57.0  # Текущая координата устройства
-        self.lon = 28.0  # Текущая координата устройства
-        self.pointCnt = 0
-        self.dir = 0 #Направление движения автомобиля 0-На склад, 1-на ферму
-         #Координаты на склад и назад
-        self.coordinates =  [
             [28.321445, 57.349902],
             [28.321579, 57.349832],
             [28.321724, 57.349731],
@@ -405,6 +391,20 @@ class coordinateSender(QtCore.QThread):
             [28.335736, 57.344738],
             [28.336744, 57.344507],
             [28.338053, 57.344229],
+'''
+class coordinateSender(QtCore.QThread):
+    def __init__(self, parent = None):
+        super().__init__()
+        self.topic_data = "data/state"  # текущее состояние
+        self.mqtt_client = init("mqtt-vikonik-Truck")#mqtt-vikonik-Truck
+        self.lat = 57.0  # Текущая координата устройства
+        self.lon = 28.0  # Текущая координата устройства
+        self.pointCnt = 0
+        self.numOfPoint = 5 #36
+        self.dir = 0 #Направление движения автомобиля 0-На склад, 1-на ферму
+         #Координаты на склад и назад
+        self.coordinates =  [
+
             [28.338954, 57.343986],
             [28.340113, 57.34365],
             [28.34125, 57.343233],
@@ -417,12 +417,12 @@ class coordinateSender(QtCore.QThread):
         
     def run(self):
         while(1):
-            sleep(1)            
+            sleep(5)            
             #print("Поток кординаты , %d ", self.pointCnt)
             if window.speed > 0:
                 if self.pointCnt == 0:
                     self.dir = 0 
-                if self.pointCnt == 36:
+                if self.pointCnt == self.numOfPoint:
                     self.dir = 1    
 
                 if self.dir == 0 :

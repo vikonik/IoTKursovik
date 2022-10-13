@@ -1,1 +1,1 @@
-python testGui.py
+python Truck.py
