@@ -15,6 +15,9 @@ import threading
 
 localCounter = 0
 
+modeAuto = "modeAuto"
+modeManual = "modeManual"
+
 class ExampleApp(QtWidgets.QMainWindow, ui_GUITruck.Ui_MainWindow):
     def __init__(self):
         # Это здесь нужно для доступа к переменным, методам
@@ -42,6 +45,10 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUITruck.Ui_MainWindow):
         self.spinBox_conditionerOn.valueChanged.connect(self.spinboxChangeConditionerOn)
 
         self.spinBox_conditionerOff.valueChanged.connect(self.spinboxChangeConditionerOff)
+
+        self.checkBox_conditionerManualControl.clicked.connect(self.checkConditionerRegim)
+
+        self.pushButton_conditionerManualControl.clicked.connect(self.pushButtonConditionerManualControl)
 
         self.slider_chock.valueChanged.connect(self.sliderCangeChock)       
         self.slider_chock.sliderReleased.connect(self.sendSliderCangeChock)   
@@ -89,6 +96,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUITruck.Ui_MainWindow):
     #Пороги включения и выключения кондиционера
         self.conditionerPorogOn = 0
         self.conditionerPorogOff = 0
+
+        self.conditionerControlStatus = modeAuto #False Автоматический, True ручной
     #Топики    
         # отправляемое сообщеие
         self.topic_data = "data/state"  # текущее состояние
@@ -182,6 +191,48 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUITruck.Ui_MainWindow):
     def spinboxChangeConditionerOff(self):
         self.conditionerPorogOff = self.spinBox_conditionerOff.value()
         print(self.conditionerPorogOff)  
+
+
+        
+    def checkConditionerRegim(self):
+         if self.checkBox_conditionerManualControl.isChecked():
+             self.conditionerControlStatus = modeManual
+         else:     
+            self.conditionerControlStatus = modeAuto
+
+         if self.conditionerControlStatus == modeManual:
+            print("Ручной режим")
+            self.pushButton_conditionerManualControl.setEnabled(True)
+            self.spinBox_conditionerOn.setDisabled(True)
+            self.spinBox_conditionerOff.setDisabled(True)
+            if self.conditionerState == True:
+                self.pushButton_conditionerManualControl.setText("Выкл.")
+            else:
+                self.pushButton_conditionerManualControl.setText("Вкл.")    
+
+         else :
+            print("Автоматический режим")
+            self.pushButton_conditionerManualControl.setDisabled(True)
+            self.spinBox_conditionerOn.setEnabled(True)
+            self.spinBox_conditionerOff.setEnabled(True)
+
+
+
+#Кнопка ручного управления кондиционером
+    def pushButtonConditionerManualControl(self):
+        if self.conditionerState == False:
+            self.label_conditionerState.setText("Вкл.")  
+            self.label_conditionerState.setStyleSheet("background-color: green")
+            self.pushButton_conditionerManualControl.setText("Откл.")
+            self.conditionerState = True
+            return
+        
+        if self.conditionerState == True:
+            self.label_conditionerState.setText("Откл.")  
+            self.label_conditionerState.setStyleSheet("background-color: red")  
+            self.pushButton_conditionerManualControl.setText("Вкл.")
+            self.conditionerState = False
+            return
 
 
 #Проверка включения кондиционера
@@ -295,7 +346,12 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUITruck.Ui_MainWindow):
                 "temperatureOut": self.temperatureOut
             },
             "speed": self.speed,  # скорость
-            "conditionerState": self.conditionerState,
+
+            "conditionerState": self.conditionerState, #Состояние кондиционера Вкл/Выкл
+            "conditionerControlStatus":self.conditionerControlStatus,#Режим управления ручной/автоматический
+            "conditionerPorogOn": self.conditionerPorogOn,
+            "conditionerPorogOff": self.conditionerPorogOff,
+
             "weight": self.weight,
             "choke": self.choke,
             "suddenBraking":self.suddenBrakingLael,
