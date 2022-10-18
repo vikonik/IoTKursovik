@@ -423,7 +423,7 @@
          <item>
           <widget class="QSpinBox" name="spinBox_conditionerOn">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="toolTip">
             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;При достижении этой температурв кондиционер бкдет включен&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -452,7 +452,7 @@
          <item>
           <widget class="QSpinBox" name="spinBox_conditionerOff">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="toolTip">
             <string>При достижении этой температуры кондиционер будет выключен</string>
@@ -465,6 +465,30 @@
            </property>
            <property name="value">
             <number>5</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox">
+           <property name="text">
+            <string>Ручное управление</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Вкл.</string>
            </property>
           </widget>
          </item>

@@ -298,7 +298,7 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUITruck.Ui_MainWindow):
             "conditionerState": self.conditionerState,
             "weight": self.weight,
             "choke": self.choke,
-            "suddenBraking":self.suddenBraking,
+            "suddenBraking":self.suddenBrakingLael,
             "gass":{
                 "gassArgon":self.gassArgon,
                 "gassAzot":self.gassAzot,
@@ -441,19 +441,6 @@ class coordinateSender(QtCore.QThread):
                 window.label_lon.setText(str(window.lon))
 
             publish_data(window.mqtt_client,window.topic_data,window.get_data())
-
-    # Формируем данные для отправки
-    def get_data(self):
-        data = json.dumps({
-            "pos":{
-                "lat": self.lat,
-                "lon": self.lon
-            },#Исключим координаты для симулятора. Их будем отправлять в другом потоке
-            "speed": self.pointCnt  # скорость
-        })
-        return data
-
-
 
    
 
