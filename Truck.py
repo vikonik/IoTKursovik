@@ -184,13 +184,15 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUITruck.Ui_MainWindow):
 #Температура включения кондиционера
     def spinboxChangeConditionerOn(self):
         self.conditionerPorogOn = self.spinBox_conditionerOn.value()
-        print(self.conditionerPorogOn).end
+        print(self.conditionerPorogOn)
+        print("")
 #        self.checkConditioner()
 
 #Температура выключения кондиционера
     def spinboxChangeConditionerOff(self):
         self.conditionerPorogOff = self.spinBox_conditionerOff.value()
-        print(self.conditionerPorogOff).end  
+        print(self.conditionerPorogOff)
+        print("")
 
 
         
@@ -201,7 +203,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUITruck.Ui_MainWindow):
             self.conditionerControlStatus = modeAuto
 
          if self.conditionerControlStatus == modeManual:
-            print("Ручной режим").end
+            print("Ручной режим")
+            print("")
             self.pushButton_conditionerManualControl.setEnabled(True)
             self.spinBox_conditionerOn.setDisabled(True)
             self.spinBox_conditionerOff.setDisabled(True)
@@ -211,7 +214,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUITruck.Ui_MainWindow):
                 self.pushButton_conditionerManualControl.setText("Вкл.")    
 
          else :
-            print("Автоматический режим").end
+            print("Автоматический режим")
+            print("")
             self.pushButton_conditionerManualControl.setDisabled(True)
             self.spinBox_conditionerOn.setEnabled(True)
             self.spinBox_conditionerOff.setEnabled(True)
@@ -251,10 +255,12 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUITruck.Ui_MainWindow):
 
 #Команда на управление кондиционером
     def command_conditionerCmd(self, client, userdata, message):
-        print("CMD: changeConditionerState, value: %s" % message.payload).end
+        print("CMD: changeConditionerState, value: %s" % message.payload)
+        print("")
         try:
             self.conditionerState  = bool(message.payload)
-            print(self.conditionerState ).end
+            print(self.conditionerState )
+            print("")
             if self.conditionerState == True:
                 self.label_conditionerState.setText("Вкл.")  
                 self.label_conditionerState.setStyleSheet("background-color: green")
@@ -262,7 +268,8 @@ class ExampleApp(QtWidgets.QMainWindow, ui_GUITruck.Ui_MainWindow):
                 self.label_conditionerState.setText("Откл.")  
                 self.label_conditionerState.setStyleSheet("background-color: red")  
         except:
-            print("can't change staste to %s" % message.payload).end
+            print("can't change staste to %s" % message.payload)
+            print("")
 
 
 
@@ -388,21 +395,26 @@ def init(clientid, clientUsername="", clientPassword=""):
 
 # connect reaction
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code %s" % str(rc)).end
+    print("Connected with result code %s" % str(rc))
+    print("")
     if rc == 0:
         isConnect = 1
         client.publish("connect", "true", 1)
     if rc == 5:
-        print("Authorization error").end
+        print("Authorization error")
+        print("")
 
 # default message reaction
 def on_message(client, userdata, message):
     print("Some message received topic: %s, payload: %s" %
-          (message.topic, message.payload)).end
+          (message.topic, message.payload))
+    print("")
+    
 
 # connect to server
 def publish_data(client, topic, data):
-    #print(topic, data).end
+    #print(topic, data)
+    #print("")
     return client.publish(topic, data)
 
 
@@ -474,7 +486,7 @@ class coordinateSender(QtCore.QThread):
     def run(self):
         while(1):
             sleep(5)            
-            #print("Поток кординаты , %d ", self.pointCnt).end
+            #print("Поток кординаты , %d ", self.pointCnt)
             if window.speed > 0:
                 if self.pointCnt == 0:
                     self.dir = 0 
@@ -502,13 +514,15 @@ class coordinateSender(QtCore.QThread):
 
 
 
-print("Start GIU").end
+print("Start GIU")
+print("")
 app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
 window = ExampleApp()  # Создаём объект класса ExampleApp
 window.show()  # Показываем окно
 window.readFormData()
 publish_data(window.mqtt_client,window.topic_data, window.get_data())
-print("OK").end
+print("OK")
+print("")
 window.lunch_thread()
 app.exec_()  # и запускаем приложение
     
