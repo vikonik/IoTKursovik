@@ -483,15 +483,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinBox_argon">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <number>100</number>
+            <widget class="QDoubleSpinBox" name="spinBox_argon">
+             <property name="decimals">
+              <number>1</number>
              </property>
             </widget>
            </item>
@@ -510,15 +504,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinBox_azot">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <number>100</number>
+            <widget class="QDoubleSpinBox" name="spinBox_azot">
+             <property name="decimals">
+              <number>1</number>
              </property>
             </widget>
            </item>
@@ -537,15 +525,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinBox_heli">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <number>100</number>
+            <widget class="QDoubleSpinBox" name="spinBox_heli">
+             <property name="decimals">
+              <number>1</number>
              </property>
             </widget>
            </item>
@@ -564,15 +546,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinBox_vodorod">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <number>100</number>
+            <widget class="QDoubleSpinBox" name="spinBox_vodorod">
+             <property name="decimals">
+              <number>1</number>
              </property>
             </widget>
            </item>
@@ -594,15 +570,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinBox_CO2">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <number>100</number>
+            <widget class="QDoubleSpinBox" name="spinBox_CO2">
+             <property name="decimals">
+              <number>1</number>
              </property>
             </widget>
            </item>
@@ -624,15 +594,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinBox_CO">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <number>100</number>
+            <widget class="QDoubleSpinBox" name="spinBox_CO">
+             <property name="decimals">
+              <number>1</number>
              </property>
             </widget>
            </item>
@@ -657,15 +621,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spinBox_O2">
-             <property name="minimumSize">
-              <size>
-               <width>60</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <number>100</number>
+            <widget class="QDoubleSpinBox" name="spinBox_O2">
+             <property name="decimals">
+              <number>1</number>
              </property>
             </widget>
            </item>
@@ -681,18 +639,9 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_13">
          <item>
-          <widget class="QSpinBox" name="spinBox_weight">
-           <property name="minimumSize">
-            <size>
-             <width>60</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>До 5 тонн</string>
-           </property>
-           <property name="maximum">
-            <number>3000</number>
+          <widget class="QDoubleSpinBox" name="spinBox_weight">
+           <property name="decimals">
+            <number>1</number>
            </property>
           </widget>
          </item>
