@@ -123,7 +123,7 @@
             },
             {
               "selector": "truckStatus",
-              "text": "Ссостояния грузовика",
+              "text": "Ссост-е грузовика",
               "type": "string"
             }
           ],
@@ -236,7 +236,7 @@
             },
             {
               "selector": "temperatureIn",
-              "text": "В кузове",
+              "text": "кузове",
               "type": "number"
             }
           ],
@@ -248,7 +248,7 @@
           "format": "table",
           "global_query_id": "",
           "key": "Q-283d5aec-5e01-4034-85bb-a73da2ce94ca-0",
-          "refId": "A",
+          "refId": "B",
           "root_selector": "",
           "source": "url",
           "type": "json",
@@ -267,7 +267,7 @@
             },
             {
               "selector": "temperatureIn",
-              "text": "На складе",
+              "text": "складе",
               "type": "number"
             }
           ],
@@ -280,7 +280,7 @@
           "global_query_id": "",
           "hide": false,
           "key": "Q-283d5aec-5e01-4034-85bb-a73da2ce94ca-0",
-          "refId": "B",
+          "refId": "На",
           "root_selector": "",
           "source": "url",
           "type": "json",
@@ -378,7 +378,7 @@
             },
             {
               "selector": "humidityIn",
-              "text": "В кузове",
+              "text": "%",
               "type": "number"
             }
           ],
@@ -389,7 +389,7 @@
           "filters": [],
           "format": "table",
           "global_query_id": "",
-          "refId": "A",
+          "refId": "В кузове",
           "root_selector": "",
           "source": "url",
           "type": "json",
@@ -408,7 +408,7 @@
             },
             {
               "selector": "humidityIn",
-              "text": "На складе",
+              "text": "%",
               "type": "number"
             }
           ],
@@ -420,7 +420,7 @@
           "format": "table",
           "global_query_id": "",
           "hide": false,
-          "refId": "B",
+          "refId": "На складе",
           "root_selector": "",
           "source": "url",
           "type": "json",
@@ -458,7 +458,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -546,7 +547,7 @@
           }
         }
       ],
-      "title": "Выделение газов в кузове автомобиля",
+      "title": "Выделение газов в кузове грузовика",
       "type": "bargauge"
     },
     {
@@ -572,7 +573,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -679,7 +681,33 @@
             "lineWidth": 0,
             "spanNulls": false
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "На склад": {
+                  "color": "orange",
+                  "index": 0,
+                  "text": "На склад"
+                },
+                "На ферму": {
+                  "color": "semi-dark-red",
+                  "index": 1,
+                  "text": "На ферму"
+                },
+                "Стоянка-полный": {
+                  "color": "blue",
+                  "index": 2,
+                  "text": "Стоянка-полный"
+                },
+                "Стоянка-пустой": {
+                  "color": "purple",
+                  "index": 3,
+                  "text": "Стоянка-пустой"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -725,7 +753,7 @@
             },
             {
               "selector": "truckStatus",
-              "text": "Состояние автомобиля",
+              "text": "Состояние грузовика",
               "type": "string"
             }
           ],
@@ -849,13 +877,13 @@
     "list": []
   },
   "time": {
-    "from": "now-5s",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Test dashboard",
   "uid": "g2Y4udVVz",
-  "version": 18,
+  "version": 21,
   "weekStart": ""
 }
